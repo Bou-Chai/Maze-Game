@@ -4,6 +4,24 @@
 // Date last updated: December 18, 2024
 
 class Edge {
-    Node node;
-    int weight;
+    private int nodeIndex;
+    private int weight;
+
+    // Getters
+    public getNodeIndex() {
+        return nodeIndex;
+    }
+
+    public getWeight() {
+        return weight;
+    }
+
+    // Setters
+    public setNodeIndex(int nodeIndex) {
+        this.nodeIndex = nodeIndex;
+    }
+
+    public setWeight(int weight) {
+        this.weight = weight;
+    }
 }

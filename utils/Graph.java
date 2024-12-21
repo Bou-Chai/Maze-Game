@@ -7,20 +7,37 @@ import java.util.ArrayList;
 
 class Graph<T> {
     // Define variables
-    private int size;
-    ArrayList<Node> adjacencyList = new ArrayList<Node>();
+    private ArrayList<Node> adjacencyList = new ArrayList<Node>();
 
-    public Graph() {
-        
+    // Constructor that initializes initial node
+    public Graph(T data) {
+        adjacencyList.add(new Node(data));
     }
 
-    // Method to add new node
-    public addNode(Node adjNode, T data, int weight){
-
+    // Method to add unconnected node
+    public addNode(T data) {
+        adjacencyList.add(new Node(data));
     }
 
-    // Getters and setters
-    public int getSize() {
-        return this.size;
+    // Method to add node connected to another node
+    public addNode(T data, int node, int weight) {
+        adjacencyList.add(new Node(data));
+        addEdge(node, adjacencyList.size() - 1, weight);
+    }
+
+    // Method to add an edge between the specified nodes
+    public addEdge(int node1, int node2, int weight) {
+        adjacencyList.get(node1).addEdge(node2, weight);
+        adjacencyList.get(node2).addEdge(node1, weight);
+    }
+
+    // Method to return a node
+    public Node getNode(int index) {
+        return adjacencyList.get(index);
+    }
+
+    // Setters
+    public setNodeData(int node, T data) {
+        getNode(node).setData(data);
     }
 }
