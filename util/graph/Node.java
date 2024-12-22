@@ -1,8 +1,11 @@
 // Node class for graph
 // Tyseer Ammar Shahriar
 // Date created: December 18, 2024
-// Date last updated: December 18, 2024
+// Date last updated: December 22, 2024
+package util.graph;
+
 import java.util.ArrayList;
+
 class Node<T> {
     private T data;
     private ArrayList<Edge> edges = new ArrayList<Edge>();
@@ -17,8 +20,8 @@ class Node<T> {
     }
 
     // Method to add edge
-    public void addEdge(int node, int weight) {
-        edges.add(new Edge(node, weight));
+    public void addEdge(int nodeIndex, int weight) {
+        edges.add(new Edge(nodeIndex, weight));
     }
 
     // Getters
@@ -27,7 +30,7 @@ class Node<T> {
     }
 
     // Setters
-    public setData(T data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

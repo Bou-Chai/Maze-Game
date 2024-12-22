@@ -6,19 +6,21 @@
 
 import java.util.Random;
 import java.util.Stack;
+import util.graph.Graph;
 
 class Maze {
     // Declare vairables
     private int size;
-    private static Point startNode;
-    private static int maxIndex;
-    private static boolean exitGenerated = false;
+    private Point startNode;
+    private int maxIndex;
+    private boolean exitGenerated = false;
     private int numNodes;
  //   private int currentNodeX;
  //   private int currentNodeY;
-    private static int[][] graphicsMatrix;
-    private static Stack<Node> nodeStack = new Stack<Node>();
-    private static Random rd = new Random();
+    private int[][] graphicsMatrix;
+    private Stack<Point> nodeStack = new Stack<Point>();
+    private Graph mazeGraph;
+    private Random rd = new Random();
 
     // Constructor
     public Maze(int size) {
@@ -37,6 +39,7 @@ class Maze {
         graphicsMatrix[startNode.y][startNode.x] = 1;
 
         nodeStack.push(startNode);
+        mazeGraph = new Graph<Point>(startNode);
         int count = 0;
         while (!nodeStack.empty()) {
             genNode = nodeStack.pop();
@@ -57,7 +60,7 @@ class Maze {
     }
 
     // Function to generate random paths
-    public static void genRandomPath(Point currentNode) {
+    public void genRandomPath(Point currentNode) {
         int[] order = new int[4];
         int continuation;
         Point initNode = new Point(0, 0);
@@ -65,6 +68,8 @@ class Maze {
         boolean downFail = false;
         boolean leftFail = false;
         boolean rightFail = false;
+        int pathLength = 0;
+        int genCount = 1;
      
         while (!(upFail && downFail && leftFail && rightFail)) {
             upFail = false;
@@ -84,7 +89,7 @@ class Maze {
 
                 switch (i) {
                     case 0:
-                        for (int n = 0; i < continuation; i++) {
+                        for (pathLength = 0; pathLength < continuation; pathLength++) {
                             if (!genUp(currentNode)) {
                                 upFail = true;
                                 break;
@@ -94,7 +99,7 @@ class Maze {
                         }
                         break;
                     case 1:
-                        for (int n = 0; i < continuation; i++) {
+                        for (pathLength = 0; pathLength < continuation; pathLength++) {
                             if (!genDown(currentNode)) {
                                 downFail = true;
                                 break;
@@ -104,7 +109,7 @@ class Maze {
                         }
                         break;
                     case 2:
-                        for (int n = 0; i < continuation; i++) {
+                        for (pathLength = 0; pathLength < continuation; pathLength++) {
                             if (!genLeft(currentNode)) {
                                 leftFail = true;
                                 break;
@@ -114,7 +119,7 @@ class Maze {
                         }
                         break;
                     case 3:
-                        for (int n = 0; i < continuation; i++) {
+                        for (pathLength = 0; pathLength < continuation; pathLength++) {
                             if (!genRight(currentNode)) {
                                 rightFail = true;
                                 break;
@@ -131,6 +136,9 @@ class Maze {
                     nodeStack.push(new Point(currentNode.x, currentNode.y));
                     System.out.printf("Pushed: (%d, %d)\n", currentNode.x, currentNode.y);
                 }
+
+                // Add current node to graph
+                mazeGraph.addNode(currentNode, genCount - 1, pathLength);
             }
         }
         // If the last node in the path touches the boundary, generate boundary node
@@ -149,9 +157,9 @@ class Maze {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Function to "move up"
-    public static boolean genUp(Point currentNode) {
+    private boolean genUp(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y - 1][currentNode.x] == 0 && graphicsMatrix[currentNode.y - 2][currentNode.x] == 0 && isClearHorizontally(new Node(currentNode.x, currentNode.y - 1))) {
+            if (graphicsMatrix[currentNode.y - 1][currentNode.x] == 0 && graphicsMatrix[currentNode.y - 2][currentNode.x] == 0 && isClearHorizontally(new Point(currentNode.x, currentNode.y - 1))) {
                 graphicsMatrix[currentNode.y - 1][currentNode.x] = 1;
                 return true;
             } else {
@@ -163,9 +171,9 @@ class Maze {
     }
 
     // Function to "move down"
-    public static boolean genDown(Point currentNode) {
+    private boolean genDown(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y + 1][currentNode.x] == 0 && graphicsMatrix[currentNode.y + 2][currentNode.x] == 0 && isClearHorizontally(new Node(currentNode.x, currentNode.y + 1))) {
+            if (graphicsMatrix[currentNode.y + 1][currentNode.x] == 0 && graphicsMatrix[currentNode.y + 2][currentNode.x] == 0 && isClearHorizontally(new Point(currentNode.x, currentNode.y + 1))) {
                 graphicsMatrix[currentNode.y + 1][currentNode.x] = 1;
                 return true;
             } else {
@@ -177,9 +185,9 @@ class Maze {
     }
 
     // Function to "move left"
-    public static boolean genLeft(Point currentNode) {
+    private boolean genLeft(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y][currentNode.x - 1] == 0 && graphicsMatrix[currentNode.y][currentNode.x - 2] == 0 && isClearVertically(new Node(currentNode.x - 1, currentNode.y))) {
+            if (graphicsMatrix[currentNode.y][currentNode.x - 1] == 0 && graphicsMatrix[currentNode.y][currentNode.x - 2] == 0 && isClearVertically(new Point(currentNode.x - 1, currentNode.y))) {
                 graphicsMatrix[currentNode.y][currentNode.x - 1] = 1;
                 return true;
             } else {
@@ -191,9 +199,9 @@ class Maze {
     }
 
     // Function to "move right"
-    public static boolean genRight(Point currentNode) {
+    private boolean genRight(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y][currentNode.x + 1] == 0 && graphicsMatrix[currentNode.y][currentNode.x + 2] == 0 && isClearVertically(new Node(currentNode.x + 1, currentNode.y))) {
+            if (graphicsMatrix[currentNode.y][currentNode.x + 1] == 0 && graphicsMatrix[currentNode.y][currentNode.x + 2] == 0 && isClearVertically(new Point(currentNode.x + 1, currentNode.y))) {
                 graphicsMatrix[currentNode.y][currentNode.x + 1] = 1;
                 return true;
             } else {
@@ -205,7 +213,7 @@ class Maze {
     }
 
     // Funtion to check left and right sides during path generation
-    public static boolean isClearHorizontally(Point node) {
+    private boolean isClearHorizontally(Point node) {
         if (graphicsMatrix[node.y][node.x - 1] == 1 || graphicsMatrix[node.y][node.x + 1] == 1) {
             return false;
         } else {
@@ -214,7 +222,7 @@ class Maze {
     }
 
     // Funtion to check sides above and below during path generation
-    public static boolean isClearVertically(Point node) {
+    private boolean isClearVertically(Point node) {
         if (graphicsMatrix[node.y - 1][node.x] == 1 || graphicsMatrix[node.y + 1][node.x] == 1) {
             return false;
         } else {
@@ -223,7 +231,7 @@ class Maze {
     }
 
     // Function to generate a fresh boundary node
-    public static Point genBoundaryNode() {
+    private Point genBoundaryNode() {
         Point boundaryNode = new Point(0, 0);
         boolean success = false;
 
@@ -250,7 +258,7 @@ class Maze {
         return boundaryNode;
     }
 
-    private static void genExitNode() {
+    private void genExitNode() {
         Point boundaryNode;
         boolean success = false;
         

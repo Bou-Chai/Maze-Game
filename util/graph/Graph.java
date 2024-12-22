@@ -2,10 +2,11 @@
 // Tyseer Ammar Shahriar
 // Date created: August 16, 2024
 // Date last updated: December 18, 2024
+package util.graph;
 
 import java.util.ArrayList;
 
-class Graph<T> {
+public class Graph<T> {
     // Define variables
     private ArrayList<Node> adjacencyList = new ArrayList<Node>();
 
@@ -15,18 +16,18 @@ class Graph<T> {
     }
 
     // Method to add unconnected node
-    public addNode(T data) {
+    public void addNode(T data) {
         adjacencyList.add(new Node(data));
     }
 
     // Method to add node connected to another node
-    public addNode(T data, int node, int weight) {
+    public void addNode(T data, int node, int weight) {
         adjacencyList.add(new Node(data));
         addEdge(node, adjacencyList.size() - 1, weight);
     }
 
     // Method to add an edge between the specified nodes
-    public addEdge(int node1, int node2, int weight) {
+    public void addEdge(int node1, int node2, int weight) {
         adjacencyList.get(node1).addEdge(node2, weight);
         adjacencyList.get(node2).addEdge(node1, weight);
     }
@@ -37,7 +38,7 @@ class Graph<T> {
     }
 
     // Setters
-    public setNodeData(int node, T data) {
+    public void setNodeData(int node, T data) {
         getNode(node).setData(data);
     }
 }

@@ -2,26 +2,32 @@
 // Tyseer Ammar Shahriar
 // Date created: December 18, 2024
 // Date last updated: December 18, 2024
+package util.graph;
 
 class Edge {
     private int nodeIndex;
     private int weight;
 
+    public Edge(int nodeIndex, int weight) {
+        this.nodeIndex = nodeIndex;
+        this.weight = weight;
+    }
+
     // Getters
-    public getNodeIndex() {
+    public int getNodeIndex() {
         return nodeIndex;
     }
 
-    public getWeight() {
+    public int getWeight() {
         return weight;
     }
 
     // Setters
-    public setNodeIndex(int nodeIndex) {
+    public void setNodeIndex(int nodeIndex) {
         this.nodeIndex = nodeIndex;
     }
 
-    public setWeight(int weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 }
