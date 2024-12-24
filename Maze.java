@@ -19,8 +19,10 @@ class Maze {
  //   private int currentNodeY;
     private int[][] graphicsMatrix;
     private Stack<Point> nodeStack = new Stack<Point>();
-    private Graph mazeGraph;
+    private Stack<Integer> nodeNumStack = new Stack<Integer>();
+    private Graph<Point> mazeGraph;
     private Random rd = new Random();
+    private int nodeCount = 0;
 
     // Constructor
     public Maze(int size) {
@@ -39,17 +41,26 @@ class Maze {
         graphicsMatrix[startNode.y][startNode.x] = 1;
 
         nodeStack.push(startNode);
+        nodeNumStack.push(nodeCount);
         mazeGraph = new Graph<Point>(startNode);
         int count = 0;
         while (!nodeStack.empty()) {
-            genNode = nodeStack.pop();
-            genRandomPath(genNode);
-            count++;
+
+            genNode = nodeStack.peek();
+            
             System.out.printf("%d----------------------------------------------------------------------------\n", count);
             System.out.printf("(%d, %d)\n", genNode.x, genNode.y);
             System.out.println(nodeStack);
+
+            genRandomPath(genNode);
+            nodeStack.pop();
+            nodeNumStack.pop();
+            //nodeNumStack.pop();
+            count++;
         }
         genExitNode();
+
+        mazeGraph.print();
 
         return numNodes;
     }
@@ -69,7 +80,6 @@ class Maze {
         boolean leftFail = false;
         boolean rightFail = false;
         int pathLength = 0;
-        int genCount = 1;
      
         while (!(upFail && downFail && leftFail && rightFail)) {
             upFail = false;
@@ -133,12 +143,18 @@ class Maze {
                 }
                 // Push current node onto stack upon switching path direction
                 if (currentNode.x != initNode.x || currentNode.y != initNode.y) {
+                    
                     nodeStack.push(new Point(currentNode.x, currentNode.y));
-                    System.out.printf("Pushed: (%d, %d)\n", currentNode.x, currentNode.y);
-                }
 
-                // Add current node to graph
-                mazeGraph.addNode(currentNode, genCount - 1, pathLength);
+                    // Add current node to graph
+                    mazeGraph.addNode(currentNode, nodeNumStack.peek(), pathLength);
+                    nodeCount++;
+                    nodeNumStack.push(nodeCount);
+
+                    System.out.printf("Pushed: (%d, %d)\n", currentNode.x, currentNode.y);
+
+                    //graphicsMatrix[currentNode.y][currentNode.x] = 7;
+                }
             }
         }
         // If the last node in the path touches the boundary, generate boundary node

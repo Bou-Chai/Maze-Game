@@ -24,6 +24,13 @@ class Node<T> {
         edges.add(new Edge(nodeIndex, weight));
     }
 
+    // Method to print node
+    public void print() {
+        for (Edge edge: edges) {
+            System.out.printf("(%d:%d) ", edge.getNodeIndex(), edge.getWeight());
+        }
+    }
+
     // Getters
     public T getData() {
         return data;
