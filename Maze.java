@@ -6,7 +6,7 @@
 
 import java.util.Random;
 import java.util.Stack;
-import util.graph.Graph;
+import util.graph.*;
 
 class Maze {
     // Declare vairables
@@ -41,8 +41,12 @@ class Maze {
         graphicsMatrix[startNode.y][startNode.x] = 1;
 
         nodeStack.push(startNode);
-        nodeNumStack.push(nodeCount);
+        //nodeNumStack.push(nodeCount);
         mazeGraph = new Graph<Point>(startNode);
+
+        //System.out.println(nodeStack.peek());
+        //System.out.println(mazeGraph.getNodeIndex(nodeStack.peek()));
+
         int count = 0;
         while (!nodeStack.empty()) {
 
@@ -50,12 +54,12 @@ class Maze {
             
             System.out.printf("%d----------------------------------------------------------------------------\n", count);
             System.out.printf("(%d, %d)\n", genNode.x, genNode.y);
-            System.out.println(nodeStack);
+            //System.out.println(nodeStack);
 
             genRandomPath(genNode);
             nodeStack.pop();
-            nodeNumStack.pop();
             //nodeNumStack.pop();
+
             count++;
         }
         genExitNode();
@@ -71,15 +75,19 @@ class Maze {
     }
 
     // Function to generate random paths
-    public void genRandomPath(Point currentNode) {
+    public void genRandomPath(Point node) {
         int[] order = new int[4];
         int continuation;
+        Point currentNode = new Point(0, 0);
         Point initNode = new Point(0, 0);
         boolean upFail = false;
         boolean downFail = false;
         boolean leftFail = false;
         boolean rightFail = false;
         int pathLength = 0;
+
+        currentNode.x = node.x;
+        currentNode.y = node.y;
      
         while (!(upFail && downFail && leftFail && rightFail)) {
             upFail = false;
@@ -143,13 +151,42 @@ class Maze {
                 }
                 // Push current node onto stack upon switching path direction
                 if (currentNode.x != initNode.x || currentNode.y != initNode.y) {
-                    
-                    nodeStack.push(new Point(currentNode.x, currentNode.y));
 
                     // Add current node to graph
-                    mazeGraph.addNode(currentNode, nodeNumStack.peek(), pathLength);
-                    nodeCount++;
-                    nodeNumStack.push(nodeCount);
+                    //System.out.println(nodeStack.peek());
+                    /*System.out.print("Peeked: ");
+                    nodeStack.peek().print();
+
+                    System.out.print("Current: ");
+                    currentNode.print();
+
+                    System.out.println("----------");
+                    printGraph();
+                    System.out.println("----------");*/
+                    mazeGraph.addNode(
+                        new Point(currentNode.x, currentNode.y), 
+                        mazeGraph.getNodeIndex(nodeStack.peek(), 
+                        new Comparison<Point>() {
+                            @Override
+                            public int compare(Point obj1, Point obj2) {
+                                //obj1.print();
+                                //System.out.print(" : ");
+                                //obj2.print();
+                                //System.out.print(obj1.equals(obj2));
+                                if (obj1.equals(obj2)) {
+                                    return 0;
+                                } else {
+                                    return -1;
+                                }
+                            }
+                        }
+                        ), 
+                    pathLength);
+
+                    //mazeGraph.addNode(currentNode, mazeGraph.getNodeIndex(nodeStack.peek()), pathLength);
+                    nodeStack.push(new Point(currentNode.x, currentNode.y));
+                    //nodeCount++;
+                    //nodeNumStack.push(nodeCount);
 
                     System.out.printf("Pushed: (%d, %d)\n", currentNode.x, currentNode.y);
 
@@ -166,6 +203,16 @@ class Maze {
     // Function to generate honing path
     public static void genHoningPath(Point node1, Point node2) {
 
+    }
+
+    // Function to print maze graph data
+    public void printGraph() {
+        for (int i = 0; i < mazeGraph.getNumNodes(); i++) {
+            System.out.printf("%d: ", i);
+            Point point = (Point) mazeGraph.getNode(i).getData();
+            point.print();
+            System.out.println();
+        }
     }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------

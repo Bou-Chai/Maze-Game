@@ -6,7 +6,7 @@ package util.graph;
 
 import java.util.ArrayList;
 
-class Node<T> {
+public class Node<T> {
     private T data;
     private ArrayList<Edge> edges = new ArrayList<Edge>();
 

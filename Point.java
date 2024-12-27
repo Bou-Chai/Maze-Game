@@ -13,4 +13,19 @@ class Point {
         this.x = x;
         this.y = y;
     }
+
+    // Method to check of two points are equal
+    public boolean equals(Point point) {
+        if (x == point.x && y == point.y) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Method to print point
+    public void print() {
+        System.out.printf("(%d, %d)", x, y);
+        System.out.println();
+    }
 }

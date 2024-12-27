@@ -6,8 +6,6 @@ package util.graph;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Node;
-
 public class Graph<T> {
     // Define variables
     private ArrayList<Node> adjacencyList = new ArrayList<Node>();
@@ -41,13 +39,29 @@ public class Graph<T> {
 
     // Mehtod to return node index of the first occurence of the given data
     public int getNodeIndex(T data) {
-        int i;
         T listData;
-        for (i = 0; i < adjacencyList.size(); i++) {
-            if (listData = adjacencyList.get(i) == data) {
-                return listData;
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            listData = (T) adjacencyList.get(i).getData();
+            if (listData == data) {
+                return i;
             }
         }
+        // Return -1 upon failure to find matching item
+        return -1;
+    }
+
+    // Mehtod to return node index of the first occurence of the given data
+    public int getNodeIndex(T data, Comparison comparator) {
+        T listData;
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            System.out.println(i);
+            listData = (T) adjacencyList.get(i).getData();
+            if (comparator.compare(listData, data) == 0) {
+                return i;
+            }
+        }
+        // Return -1 upon failure to find matching item
+        return -1;
     }
 
     // Method to get number of nodes
@@ -61,6 +75,13 @@ public class Graph<T> {
             System.out.printf("%d: ", i);
             adjacencyList.get(i).print();
             System.out.println();
+        }
+    }
+
+    // Method to print the graph data (References)
+    public void printR() {
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            System.out.println(adjacencyList.get(i));
         }
     }
 
