@@ -1,16 +1,29 @@
 // Maze Game
 // Tyseer Ammar Shahriar
 // Date created: August 14, 2024
-// Date last updated: August 28, 2024
+// Date last updated: December 29, 2024
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 class Main {
 
     public static void main(String args[]) {
+        
+        JFrame window = new JFrame();
+        window.setSize(400, 500);
+        window.getContentPane().setBackground(Color.BLACK);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        window.setVisible(true);
+
         Maze maze = new Maze(100);
         maze.generate();
         maze.printGraphicsMatrix();
     }
-
+/*
     private static void printMaze(int[][] maze) {
 
         for (int[] row: maze) {
@@ -41,4 +54,5 @@ class Main {
         }
         return maze;
     }
+*/
 }

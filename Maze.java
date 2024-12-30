@@ -4,6 +4,7 @@
 // Date last updated: December 18, 2024
 // DONT GENERATE START NODES ON CORNERS!!
 
+//import java.awt.Point;
 import java.util.Random;
 import java.util.Stack;
 import util.graph.*;
@@ -62,9 +63,16 @@ class Maze {
 
             count++;
         }
-        genExitNode();
+
+        // Generate exit node
+        while (true) {
+            if (genExitNode() == 0) {
+                break;
+            }
+        }
 
         mazeGraph.print();
+        printGraph();
 
         return numNodes;
     }
@@ -101,7 +109,7 @@ class Maze {
             order[3] = (int) Math.round(Math.random() * 4);
 
             for (int i: order) {
-                continuation = (int) Math.round(Math.random() * (graphicsMatrix.length / 2));
+                continuation = (int) Math.round(Math.random() * (graphicsMatrix.length / 10));
                 initNode.x = currentNode.x;
                 initNode.y = currentNode.y;
 
@@ -165,7 +173,7 @@ class Maze {
                     System.out.println("----------");*/
                     mazeGraph.addNode(
                         new Point(currentNode.x, currentNode.y), 
-                        mazeGraph.getNodeIndex(nodeStack.peek(), 
+                        mazeGraph.getNodeIndexR(nodeStack.peek(), 
                         new Comparison<Point>() {
                             @Override
                             public int compare(Point obj1, Point obj2) {
@@ -321,37 +329,41 @@ class Maze {
         return boundaryNode;
     }
 
-    private void genExitNode() {
-        Point boundaryNode;
-        boolean success = false;
-        
-        while (!success) {
-            success = true;
-            boundaryNode = genBoundaryNode();
-            if (boundaryNode.x == 0) {
-                if (graphicsMatrix[boundaryNode.y][boundaryNode.x + 1] == 1) {
-                    graphicsMatrix[boundaryNode.y][boundaryNode.x] = 1;
-                    System.out.println("Exit Generated");
-                }
-            } else if (boundaryNode.x == maxIndex) {
-                if (graphicsMatrix[boundaryNode.y][boundaryNode.x - 1] == 1) {
-                    graphicsMatrix[boundaryNode.y][boundaryNode.x] = 1;
-                    System.out.println("Exit Generated");
-                }
-            } else if (boundaryNode.y == 0) {
-                if (graphicsMatrix[boundaryNode.y + 1][boundaryNode.x] == 1) {
-                    graphicsMatrix[boundaryNode.y][boundaryNode.x] = 1;
-                    System.out.println("Exit Generated");
-                }
-            } else if (boundaryNode.y == maxIndex) {
-                if (graphicsMatrix[boundaryNode.y - 1][boundaryNode.x] == 1) {
-                    graphicsMatrix[boundaryNode.y][boundaryNode.x] = 1;
-                    System.out.println("Exit Generated");
-                }
-            } else {
-                success = false;
+    // Method to generate exit node. Returns 0 on success and 1 on failure
+    private int genExitNode() {
+
+        int size = mazeGraph.getNumNodes();
+        int ran = (int) Math.round(Math.random() * (size / 2));
+        Point nodePoint;
+        int i;
+        int x;
+        int y;
+
+        for (i = ran; i < size; i++) {
+            
+            nodePoint = mazeGraph.getNodeData(i);
+            x = nodePoint.getX();
+            y = nodePoint.getY();
+
+            if (x == 1) {
+                graphicsMatrix[y][x - 1] = 1;
+                mazeGraph.addNode(new Point(x - 1, y), i, 1);
+                return 0;
+            } else if (x == maxIndex - 1) {
+                graphicsMatrix[y][x + 1] = 1;
+                mazeGraph.addNode(new Point(x + 1, y), i, 1);
+                return 0;
+            } else if (y == 1) {
+                graphicsMatrix[y - 1][x] = 1;
+                mazeGraph.addNode(new Point(x, y - 1), i, 1);
+                return 0;
+            } else if (y == maxIndex - 1) {
+                graphicsMatrix[y + 1][x] = 1;
+                mazeGraph.addNode(new Point(x, y + 1), i, 1);
+                return 0;
             }
         }
+        return 1;
     }
 
 /* 
