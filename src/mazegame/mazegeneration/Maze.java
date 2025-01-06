@@ -1,15 +1,16 @@
 // Maze class
 // Tyseer Ammar Shahriar
 // Date created: August 26, 2024
-// Date last updated: December 18, 2024
-// DONT GENERATE START NODES ON CORNERS!!
+// Date last updated: January 6, 2025
+
+package mazegame.mazegeneration;
 
 //import java.awt.Point;
 import java.util.Random;
 import java.util.Stack;
-import util.graph.*;
+import mazegame.util.graph.*;
 
-class Maze {
+public class Maze {
     // Declare vairables
     private int size;
     private Point startNode;
@@ -18,7 +19,7 @@ class Maze {
     private int numNodes;
  //   private int currentNodeX;
  //   private int currentNodeY;
-    private int[][] graphicsMatrix;
+    private boolean[][] graphicsMatrix;
     private Stack<Point> nodeStack = new Stack<Point>();
     private Stack<Integer> nodeNumStack = new Stack<Integer>();
     private Graph<Point> mazeGraph;
@@ -29,7 +30,7 @@ class Maze {
     public Maze(int size) {
         this.size = size;
         maxIndex = size - 1;
-        graphicsMatrix = new int[size][size];
+        graphicsMatrix = new boolean[size][size];
     }
 
     // Method to generate maze
@@ -39,7 +40,7 @@ class Maze {
         startNode = genBoundaryNode();
         Point genNode;
 
-        graphicsMatrix[startNode.y][startNode.x] = 1;
+        graphicsMatrix[startNode.y][startNode.x] = true;
 
         nodeStack.push(startNode);
         //nodeNumStack.push(nodeCount);
@@ -230,8 +231,8 @@ class Maze {
     // Function to "move up"
     private boolean genUp(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y - 1][currentNode.x] == 0 && graphicsMatrix[currentNode.y - 2][currentNode.x] == 0 && isClearHorizontally(new Point(currentNode.x, currentNode.y - 1))) {
-                graphicsMatrix[currentNode.y - 1][currentNode.x] = 1;
+            if (graphicsMatrix[currentNode.y - 1][currentNode.x] == false && graphicsMatrix[currentNode.y - 2][currentNode.x] == false && isClearHorizontally(new Point(currentNode.x, currentNode.y - 1))) {
+                graphicsMatrix[currentNode.y - 1][currentNode.x] = true;
                 return true;
             } else {
                 return false;
@@ -244,8 +245,8 @@ class Maze {
     // Function to "move down"
     private boolean genDown(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y + 1][currentNode.x] == 0 && graphicsMatrix[currentNode.y + 2][currentNode.x] == 0 && isClearHorizontally(new Point(currentNode.x, currentNode.y + 1))) {
-                graphicsMatrix[currentNode.y + 1][currentNode.x] = 1;
+            if (graphicsMatrix[currentNode.y + 1][currentNode.x] == false && graphicsMatrix[currentNode.y + 2][currentNode.x] == false && isClearHorizontally(new Point(currentNode.x, currentNode.y + 1))) {
+                graphicsMatrix[currentNode.y + 1][currentNode.x] = true;
                 return true;
             } else {
                 return false;
@@ -258,8 +259,8 @@ class Maze {
     // Function to "move left"
     private boolean genLeft(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y][currentNode.x - 1] == 0 && graphicsMatrix[currentNode.y][currentNode.x - 2] == 0 && isClearVertically(new Point(currentNode.x - 1, currentNode.y))) {
-                graphicsMatrix[currentNode.y][currentNode.x - 1] = 1;
+            if (graphicsMatrix[currentNode.y][currentNode.x - 1] == false && graphicsMatrix[currentNode.y][currentNode.x - 2] == false && isClearVertically(new Point(currentNode.x - 1, currentNode.y))) {
+                graphicsMatrix[currentNode.y][currentNode.x - 1] = true;
                 return true;
             } else {
                 return false;
@@ -272,8 +273,8 @@ class Maze {
     // Function to "move right"
     private boolean genRight(Point currentNode) {
         try {
-            if (graphicsMatrix[currentNode.y][currentNode.x + 1] == 0 && graphicsMatrix[currentNode.y][currentNode.x + 2] == 0 && isClearVertically(new Point(currentNode.x + 1, currentNode.y))) {
-                graphicsMatrix[currentNode.y][currentNode.x + 1] = 1;
+            if (graphicsMatrix[currentNode.y][currentNode.x + 1] == false && graphicsMatrix[currentNode.y][currentNode.x + 2] == false && isClearVertically(new Point(currentNode.x + 1, currentNode.y))) {
+                graphicsMatrix[currentNode.y][currentNode.x + 1] = true;
                 return true;
             } else {
                 return false;
@@ -285,7 +286,7 @@ class Maze {
 
     // Funtion to check left and right sides during path generation
     private boolean isClearHorizontally(Point node) {
-        if (graphicsMatrix[node.y][node.x - 1] == 1 || graphicsMatrix[node.y][node.x + 1] == 1) {
+        if (graphicsMatrix[node.y][node.x - 1] == true || graphicsMatrix[node.y][node.x + 1] == true) {
             return false;
         } else {
             return true;
@@ -294,7 +295,7 @@ class Maze {
 
     // Funtion to check sides above and below during path generation
     private boolean isClearVertically(Point node) {
-        if (graphicsMatrix[node.y - 1][node.x] == 1 || graphicsMatrix[node.y + 1][node.x] == 1) {
+        if (graphicsMatrix[node.y - 1][node.x] == true || graphicsMatrix[node.y + 1][node.x] == true) {
             return false;
         } else {
             return true;
@@ -322,7 +323,7 @@ class Maze {
                     boundaryNode.x = maxIndex;
                 }
             }
-            if (graphicsMatrix[boundaryNode.y][boundaryNode.x] == 0) {
+            if (graphicsMatrix[boundaryNode.y][boundaryNode.x] == false) {
                 success = true;
             }
         }
@@ -345,20 +346,20 @@ class Maze {
             x = nodePoint.getX();
             y = nodePoint.getY();
 
-            if (x == 1) {
-                graphicsMatrix[y][x - 1] = 1;
+            if (x == 1 && isClearVertically(nodePoint)) {
+                graphicsMatrix[y][x - 1] = true;
                 mazeGraph.addNode(new Point(x - 1, y), i, 1);
                 return 0;
-            } else if (x == maxIndex - 1) {
-                graphicsMatrix[y][x + 1] = 1;
+            } else if (x == maxIndex - 1 && isClearVertically(nodePoint)) {
+                graphicsMatrix[y][x + 1] = true;
                 mazeGraph.addNode(new Point(x + 1, y), i, 1);
                 return 0;
-            } else if (y == 1) {
-                graphicsMatrix[y - 1][x] = 1;
+            } else if (y == 1 && isClearHorizontally(nodePoint)) {
+                graphicsMatrix[y - 1][x] = true;
                 mazeGraph.addNode(new Point(x, y - 1), i, 1);
                 return 0;
-            } else if (y == maxIndex - 1) {
-                graphicsMatrix[y + 1][x] = 1;
+            } else if (y == maxIndex - 1 && isClearHorizontally(nodePoint)) {
+                graphicsMatrix[y + 1][x] = true;
                 mazeGraph.addNode(new Point(x, y + 1), i, 1);
                 return 0;
             }
@@ -383,9 +384,13 @@ class Maze {
 
     // Print graphics matrix
     public void printGraphicsMatrix() {
-        for (int[] row: graphicsMatrix) {
-            for (int unit: row) {
-                System.out.print(unit);
+        for (boolean[] row: graphicsMatrix) {
+            for (boolean unit: row) {
+                if (unit) {
+                    System.out.print("1");
+                } else {
+                    System.out.print("0");
+                }
             }
             System.out.print("\n");
         }

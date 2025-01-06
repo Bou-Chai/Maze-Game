@@ -1,8 +1,8 @@
 // Node class for graph
 // Tyseer Ammar Shahriar
 // Date created: December 18, 2024
-// Date last updated: December 22, 2024
-package util.graph;
+// Date last updated: January 6, 2025
+package mazegame.util.graph;
 
 import java.util.ArrayList;
 

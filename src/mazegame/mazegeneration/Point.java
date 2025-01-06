@@ -1,7 +1,9 @@
 // Tyseer Ammar Shahriar
 // Class defining nodes
 // Date created: August 30, 2024
-// Date last updated: August 30, 2024
+// Date last updated: January 6, 2025
+
+package mazegame.mazegeneration;
 
 class Point {
     // Declare variables

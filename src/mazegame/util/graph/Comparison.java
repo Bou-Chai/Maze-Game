@@ -1,8 +1,8 @@
 // Operation Interface
 // Tyseer Ammar Shahriar
 // Date created: December 26, 2024
-// Date last updated: December 26, 2024
-package util.graph;
+// Date last updated: January 6, 2025
+package mazegame.util.graph;
 
 public interface Comparison<T> {
 

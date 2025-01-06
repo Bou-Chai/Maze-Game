@@ -1,8 +1,8 @@
 // Connected Weighted Graph
 // Tyseer Ammar Shahriar
 // Date created: August 16, 2024
-// Date last updated: December 18, 2024
-package util.graph;
+// Date last updated: January 6, 2025
+package mazegame.util.graph;
 
 import java.util.ArrayList;
 
@@ -59,7 +59,7 @@ public class Graph<T> {
     public int getNodeIndex(T data, Comparison comparator) {
         T listData;
         for (int i = 0; i < adjacencyList.size(); i++) {
-            System.out.println(i);
+            //System.out.println(i);
             listData = (T) adjacencyList.get(i).getData();
             if (comparator.compare(listData, data) == 0) {
                 return i;
@@ -73,7 +73,7 @@ public class Graph<T> {
     public int getNodeIndexR(T data, Comparison comparator) {
         T listData;
         for (int i = adjacencyList.size() - 1; -1 < i; i--) {
-            System.out.println(i);
+            //System.out.println(i);
             listData = (T) adjacencyList.get(i).getData();
             if (comparator.compare(listData, data) == 0) {
                 return i;
