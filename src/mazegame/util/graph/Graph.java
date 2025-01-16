@@ -32,6 +32,22 @@ public class Graph<T> {
         adjacencyList.get(node2).addEdge(node1, weight);
     }
 
+    // Method to print the graph
+    public void print() {
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            System.out.printf("%d: ", i);
+            adjacencyList.get(i).print();
+            System.out.println();
+        }
+    }
+
+    // Method to print the graph data (References)
+    public void printR() {
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            System.out.println(adjacencyList.get(i));
+        }
+    }
+
     // Method to return a node
     public Node getNode(int index) {
         return adjacencyList.get(index);
@@ -88,20 +104,11 @@ public class Graph<T> {
         return adjacencyList.size();
     }
 
-    // Method to print the graph
-    public void print() {
-        for (int i = 0; i < adjacencyList.size(); i++) {
-            System.out.printf("%d: ", i);
-            adjacencyList.get(i).print();
-            System.out.println();
-        }
-    }
+    // TODO: write funcitons to access edges
 
-    // Method to print the graph data (References)
-    public void printR() {
-        for (int i = 0; i < adjacencyList.size(); i++) {
-            System.out.println(adjacencyList.get(i));
-        }
+    // Method to get edge based on node index and edge index
+    public Edge getEdge(int nodeIndex, int edgeIndex) {
+        return adjacencyList.get(nodeIndex).getEdge(edgeIndex);
     }
 
     // Setters

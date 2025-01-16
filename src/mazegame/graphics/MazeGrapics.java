@@ -25,20 +25,21 @@ import mazegame.mazegeneration.Point;;
 public class MazeGrapics extends Canvas {
 
     JFrame window;
-    GraphicsEnvironment env;
-    GraphicsDevice screen;
-    GraphicsConfiguration config;
     Rectangle r;
-    Graph mazeGraph;
+    Graph<Point> mazeGraph;
     Point currentPoint = new Point(0, 0);
     Point nextPoint = new Point(0, 0);
+    Point endPoint = new Point(0, 0);
+    Point startPoint = new Point(0, 0);
     int currentNodeIndex;
     int nextNodeIndex = 1; 
     int nodeNum;
-    int magnificationFactor = 25;
+    int magnificationFactor = 7; // 25 for 30
     int disX = 400;
-    int disY = 30;
-    int wallSpacing = 22;
+    int disY = 10;               // 30 for 30
+    int wallSpacing = 6;         // 22 for 30
+    double windowWidth;
+    double windowHeight;
 
     public MazeGrapics(JFrame window, Graph<Point> mazeGraph) {
         this.window = window;
@@ -50,17 +51,19 @@ public class MazeGrapics extends Canvas {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        wallSpacing = 22;
-        currentPoint = (Point) mazeGraph.getNodeData(0);
+        windowWidth = window.getBounds().getWidth();
+        windowHeight = window.getBounds().getHeight();
+
+        currentPoint = mazeGraph.getNodeData(0);
 
         //g2.setStroke(new BasicStroke(wallSpacing));
-        g2.setColor(Color.CYAN);
-        g2.drawRect(disX, disY, 30 * magnificationFactor, 30 * magnificationFactor);
+        //g2.setColor(Color.CYAN);
+        //g2.drawRect(disX, disY, 100 * magnificationFactor, 100 * magnificationFactor);
         
         // Draw the maze by looping through the maze graph, connecting node points with lines
         for (currentNodeIndex = 0; currentNodeIndex < nodeNum; currentNodeIndex++) {
 
-            currentPoint = (Point) mazeGraph.getNodeData(currentNodeIndex);
+            currentPoint = mazeGraph.getNodeData(currentNodeIndex);
             //currentPoint.addX(disX);
             //currentPoint.addY(disY);
 
@@ -68,19 +71,20 @@ public class MazeGrapics extends Canvas {
                 nextNodeIndex = mazeGraph.getNode(currentNodeIndex).getEdge(edgeIndex).getNodeIndex();
 
                 if (nextNodeIndex < currentNodeIndex - 1 || nextNodeIndex == currentNodeIndex + 1) {
-                    nextPoint = (Point) mazeGraph.getNodeData(nextNodeIndex);
+                    nextPoint = mazeGraph.getNodeData(nextNodeIndex);
                     //nextPoint.addX(disX);
                     //nextPoint.addY(disY);
 
                     g2.setColor(Color.RED);
                     g2.setStroke(new BasicStroke(wallSpacing));
-                    g2.drawLine((currentPoint.getX() * magnificationFactor) + disX, 
-                            (currentPoint.getY() * magnificationFactor) + disY,
-                            (nextPoint.getX() * magnificationFactor) + disX,
-                            (nextPoint.getY() * magnificationFactor) + disY);
-                    
+
+                    g2.drawLine(currentPoint.getX(), 
+                                currentPoint.getY(),
+                                nextPoint.getX(),
+                                nextPoint.getY());
+
                     try {
-                        //TimeUnit.MILLISECONDS.sleep(10);
+                        TimeUnit.MILLISECONDS.sleep(10);
                     } catch (Exception e) {
 
                     }
@@ -88,13 +92,19 @@ public class MazeGrapics extends Canvas {
             }
         }
 
-        // Indicate start and end points
-        currentPoint = (Point) mazeGraph.getNodeData(0);
+        // Draw start point
+        currentPoint = mazeGraph.getNodeData(0);
         g2.setColor(Color.GREEN);
-        g2.fillOval((currentPoint.getX() * magnificationFactor) + disX, (currentPoint.getY() * magnificationFactor) + disY, 10, 10);
-
-        currentPoint = (Point) mazeGraph.getNodeData(nodeNum - 1);
-        g2.fillOval((currentPoint.getX() * magnificationFactor) + disX, (currentPoint.getY() * magnificationFactor) + disY, 10, 10);
+        startPoint.setX(currentPoint.getX());
+        startPoint.setY(currentPoint.getY());
+        g2.drawLine(startPoint.getX(), startPoint.getY(), mazeGraph.getNodeData(1).getX(), mazeGraph.getNodeData(1).getY());
+        
+        // Draw end point
+        g2.setColor(Color.BLUE);
+        currentPoint = mazeGraph.getNodeData(nodeNum - 1);
+        endPoint.setX(currentPoint.getX());
+        endPoint.setY(currentPoint.getY());
+        g2.drawLine(endPoint.getX(), endPoint.getY(), mazeGraph.getNodeData(mazeGraph.getEdge(nodeNum - 1, 0).getNodeIndex()).getX(), mazeGraph.getNodeData(mazeGraph.getEdge(nodeNum - 1, 0).getNodeIndex()).getY());
 /*
         g.setColor(Color.WHITE);
         g.drawLine(0, 100, 500, 100);

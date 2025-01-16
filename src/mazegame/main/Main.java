@@ -14,13 +14,17 @@ import javax.swing.WindowConstants;
 class Main {
 
     public static void main(String args[]) {
+        int magnificationFactor = 7; // 25 for 30
+        int disX = 400;
+        int disY = 50;
 
         // Generate maze
-        Maze maze = new Maze(30);
+        Maze maze = new Maze(100);
         maze.generate();
         maze.printGraphicsMatrix();
         
         JFrame window = new JFrame();
+        maze.refactor(disX, disY, magnificationFactor);
         MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph());
 
         window.setSize(400, 500);

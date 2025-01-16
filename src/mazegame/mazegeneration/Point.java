@@ -45,6 +45,14 @@ public class Point {
         this.y += y;
     }
 
+    public void mulX(int x) {
+        this.x *= x;
+    }
+
+    public void mulY(int y) {
+        this.y *= y;
+    }
+
     // Getters
     public int getX() {
         return x;

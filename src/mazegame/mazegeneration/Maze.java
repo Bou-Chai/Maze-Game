@@ -396,6 +396,31 @@ public class Maze {
         }
     }
 
+    // Method to resize and translate maze
+    public void refactor(int x, int y, int magnificationFactor) {
+        int weight;
+        Point currentPoint;
+        int nodeNum = mazeGraph.getNumNodes();
+
+        // Iterate through graph and modify all points and weights
+        for (int currentNodeIndex = 0; currentNodeIndex < nodeNum; currentNodeIndex++) {
+            // Apply magnification factor to node points
+            currentPoint = mazeGraph.getNodeData(currentNodeIndex);
+            currentPoint.mulX(magnificationFactor);
+            currentPoint.mulY(magnificationFactor);
+
+            // Apply displacement to node points
+            currentPoint.addX(x);
+            currentPoint.addY(y);
+
+            for (int edgeIndex = 0; edgeIndex < mazeGraph.getNode(currentNodeIndex).getNumEdges(); edgeIndex++) {
+                // Multiply edge weights by magnification factor
+                weight = mazeGraph.getEdge(currentNodeIndex, edgeIndex).getWeight();
+                mazeGraph.getEdge(currentNodeIndex, edgeIndex).setWeight(weight * magnificationFactor);
+            }
+        }
+    }
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Getters and setters
