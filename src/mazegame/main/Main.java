@@ -6,6 +6,7 @@
 package mazegame.main;
 
 import mazegame.mazegeneration.Maze;
+import mazegame.graphics.MazeGrapics;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -13,17 +14,21 @@ import javax.swing.WindowConstants;
 class Main {
 
     public static void main(String args[]) {
+
+        // Generate maze
+        Maze maze = new Maze(30);
+        maze.generate();
+        maze.printGraphicsMatrix();
         
         JFrame window = new JFrame();
+        MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph());
+
         window.setSize(400, 500);
         window.getContentPane().setBackground(Color.BLACK);
+        window.add(mGraphic);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         window.setVisible(true);
-
-        Maze maze = new Maze(70);
-        maze.generate();
-        maze.printGraphicsMatrix();
     }
 /*
     private static void printMaze(int[][] maze) {

@@ -1,7 +1,7 @@
 // Maze class
 // Tyseer Ammar Shahriar
 // Date created: August 26, 2024
-// Date last updated: January 6, 2025
+// Date last updated: January 10, 2025
 
 package mazegame.mazegeneration;
 
@@ -401,5 +401,9 @@ public class Maze {
     // Getters and setters
     public int getSize() {
         return this.size;
+    }
+
+    public Graph<Point> getMazeGraph() {
+        return mazeGraph;
     }
 }

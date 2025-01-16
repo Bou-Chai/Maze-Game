@@ -4,7 +4,7 @@
 // Date last updated: January 6, 2025
 package mazegame.util.graph;
 
-class Edge {
+public class Edge {
     private int nodeIndex;
     private int weight;
 

@@ -5,7 +5,7 @@
 
 package mazegame.mazegeneration;
 
-class Point {
+public class Point {
     // Declare variables
     int x;
     int y;
@@ -29,6 +29,20 @@ class Point {
     public void print() {
         System.out.printf("(%d, %d)", x, y);
         System.out.println();
+    }
+
+    // Method to add two points together
+    public void add(Point point) {
+        x += point.getX();
+        y += point.getY();
+    }
+
+    public void addX(int x) {
+        this.x += x;
+    }
+
+    public void addY(int y) {
+        this.y += y;
     }
 
     // Getters

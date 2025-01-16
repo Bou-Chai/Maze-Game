@@ -36,6 +36,14 @@ public class Node<T> {
         return data;
     }
 
+    public Edge getEdge(int i) {
+        return edges.get(i);
+    }
+
+    public int getNumEdges() {
+        return edges.size();
+    }
+
     // Setters
     public void setData(T data) {
         this.data = data;
