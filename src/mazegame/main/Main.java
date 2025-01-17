@@ -8,31 +8,51 @@ package mazegame.main;
 import mazegame.mazegeneration.Maze;
 import mazegame.graphics.MazeGrapics;
 import java.awt.Color;
+import java.awt.Frame;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 class Main {
 
     public static void main(String args[]) {
-        int magnificationFactor = 7; // 25 for 30
-        int disX = 400;
-        int disY = 50;
+        int mazeSize = 40;
+        double magnificationFactor;
+        int wallSpacing;
+        double mazeLength;
+        double disX;
+        double disY;
+        double windowWidth;
+        double windowHeight;
 
         // Generate maze
-        Maze maze = new Maze(100);
+        Maze maze = new Maze(mazeSize);
+
         maze.generate();
         maze.printGraphicsMatrix();
         
         JFrame window = new JFrame();
-        maze.refactor(disX, disY, magnificationFactor);
-        MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph());
 
-        window.setSize(400, 500);
-        window.getContentPane().setBackground(Color.BLACK);
-        window.add(mGraphic);
+        //window.setSize(3000, 3000);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         window.setVisible(true);
+        window.getContentPane().setBackground(Color.BLACK);
+        window.setExtendedState(Frame.MAXIMIZED_BOTH);
+
+        windowWidth = window.getBounds().getWidth();
+        windowHeight = window.getBounds().getHeight();
+
+        magnificationFactor = windowHeight / mazeSize;
+        wallSpacing = ((int) magnificationFactor) - 1;
+        mazeLength = mazeSize * magnificationFactor;
+
+        disX = (windowWidth / 2) - (mazeLength / 2);
+        disY = (windowHeight / 2) - (mazeLength / 2);
+
+        maze.refactor((int) disX, (int) disY, (int) magnificationFactor);
+        MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph(), wallSpacing);
+        window.add(mGraphic);
+
     }
 /*
     private static void printMaze(int[][] maze) {
