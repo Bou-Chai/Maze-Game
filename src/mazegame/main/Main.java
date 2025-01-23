@@ -16,7 +16,7 @@ import javax.swing.WindowConstants;
 class Main {
 
     public static void main(String args[]) {
-        int mazeSize = 40;
+        int mazeSize = 100;
         double magnificationFactor;
         int wallSpacing;
         double mazeLength;
@@ -33,22 +33,26 @@ class Main {
         
         JFrame window = new JFrame();
 
-        //window.setSize(3000, 3000);
+        window.setSize(700, 500);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
         window.getContentPane().setBackground(Color.BLACK);
         window.setExtendedState(Frame.MAXIMIZED_BOTH);
 
+        // Get window bounds
         windowWidth = window.getBounds().getWidth();
         windowHeight = window.getBounds().getHeight();
 
+        // Calculate the magnification so that the maze fills the screen height-wise
         magnificationFactor = windowHeight / mazeSize;
         wallSpacing = ((int) magnificationFactor) - 1;
         mazeLength = mazeSize * magnificationFactor;
 
+        // Center the maze
         disX = (windowWidth / 2) - (mazeLength / 2);
         disY = (windowHeight / 2) - (mazeLength / 2);
 
+        // Apply the changes to the maze and add maze to window
         maze.refactor((int) disX, (int) disY, (int) magnificationFactor);
         MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph(), wallSpacing);
         window.add(mGraphic);
