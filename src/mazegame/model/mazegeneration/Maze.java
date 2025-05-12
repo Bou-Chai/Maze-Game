@@ -414,6 +414,7 @@ public class Maze {
             currentPoint.addY(y);
 
             for (int edgeIndex = 0; edgeIndex < mazeGraph.getNode(currentNodeIndex).getNumEdges(); edgeIndex++) {
+                // TODO: Add the if statement from MazeGraphics in order to prevent repeat edges?
                 // Multiply edge weights by magnification factor
                 weight = mazeGraph.getEdge(currentNodeIndex, edgeIndex).getWeight();
                 mazeGraph.getEdge(currentNodeIndex, edgeIndex).setWeight(weight * magnificationFactor);

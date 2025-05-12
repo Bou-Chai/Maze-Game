@@ -7,6 +7,7 @@ package mazegame.main;
 
 import mazegame.mazegeneration.Maze;
 import mazegame.graphics.MazeGrapics;
+import mazegame.entities.Player;
 import java.awt.Color;
 import java.awt.Frame;
 
@@ -24,6 +25,8 @@ class Main {
         double disY;
         double windowWidth;
         double windowHeight;
+
+        //Player player = new Player();
 
         // Generate maze
         Maze maze = new Maze(mazeSize);
@@ -54,9 +57,15 @@ class Main {
 
         // Apply the changes to the maze and add maze to window
         maze.refactor((int) disX, (int) disY, (int) magnificationFactor);
+
+        // Initialize entities
+        //player.setX(maze.);
+
         MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph(), wallSpacing);
         window.add(mGraphic);
 
+        // Game loop
+        while (window.)
     }
 /*
     private static void printMaze(int[][] maze) {

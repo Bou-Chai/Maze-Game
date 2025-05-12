@@ -16,11 +16,10 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.JFrame;
-
 import mazegame.util.graph.Graph;
-import mazegame.mazegeneration.Point;;
+import mazegame.mazegeneration.Point;
+import mazegame.entities.Player;
 
 public class MazeGrapics extends Canvas {
 
