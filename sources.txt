@@ -1,4 +1,6 @@
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\main\Main.java
+C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\controller\GameController.java
+
 
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\mazegeneration\Maze.java
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\mazegeneration\Path.java
@@ -6,11 +8,10 @@ C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\mazegeneration\Point
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\entities\Player.java
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\entities\Entity.java
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\entities\Mob.java
+C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\model\Model.java
 
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\view\graphics\MazeGrapics.java
-
-C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\controller\input\GameInput.java
-C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\controller\input\MenuInput.java
+C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\view\View.java
 
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\util\graph\Comparison.java
 C:\Users\Lythops\Projects\Java\Maze-Game\src\mazegame\util\graph\Edge.java

@@ -1,44 +1,55 @@
+package mazegame.model;
+
 import mazegame.mazegeneration.Maze;
 
 public class Model {
     Maze maze;
+    double mazeMagnificationFactor;
+    int mazeWallSpacing;
+    double mazeLength;
+    double mazeDisX;
+    double mazeDisY;
+    int mazeSize;
 
-    Model() {
 
-    }
-
-    public void init(int mazeSize) {
-        double magnificationFactor;
-        int wallSpacing;
-        double mazeLength;
-        double disX;
-        double disY;
-        double windowWidth;
-        double windowHeight;
-        
+    public Model(int mazeSize, int windowWidth, int windowHeight) {
         // Generate maze
         maze = new Maze(mazeSize);
 
         maze.generate();
         maze.printGraphicsMatrix();
 
-        // Calculate the magnification so that the maze fills the screen height-wise
-        magnificationFactor = windowHeight / mazeSize;
-        wallSpacing = ((int) magnificationFactor) - 1;
-        mazeLength = mazeSize * magnificationFactor;
-
-        // Center the maze
-        disX = (windowWidth / 2) - (mazeLength / 2);
-        disY = (windowHeight / 2) - (mazeLength / 2);
-
-        // Apply the changes to the maze and add maze to window
-        maze.refactor((int) disX, (int) disY, (int) magnificationFactor);
+        refactor(windowWidth, windowHeight);
 
         // Initialize entities
         //player.setX(maze.);
     }
 
+    public void update() {
+        ;
+    }
+
+    public void refactor(int windowWidth, int windowHeight) {
+
+        // Calculate the magnification so that the maze fills the screen height-wise
+        mazeSize = maze.getSize();
+        mazeMagnificationFactor = windowHeight / mazeSize;
+        mazeWallSpacing = ((int) mazeMagnificationFactor) - 1;
+        mazeLength = mazeSize * mazeMagnificationFactor;
+
+        // Center the maze
+        mazeDisX = (windowWidth / 2) - (mazeLength / 2);
+        mazeDisY = ((windowHeight / 2) - (mazeLength / 2)) - 15;
+
+        // Apply the changes to the maze and add maze to window
+        maze.refactor((int) mazeDisX, (int) mazeDisY, (int) mazeMagnificationFactor);
+    }
+
     public Maze getMaze() {
         return maze;
+    }
+
+    public int getMazeWallSpacing() {
+        return mazeWallSpacing;
     }
 }

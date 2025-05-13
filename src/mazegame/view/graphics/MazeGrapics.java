@@ -3,7 +3,7 @@
 // Date created: January 6, 2025
 // Date last updated: January 14, 2025
 
-package mazegame.graphics;
+package mazegame.view.graphics;
 
 import java.awt.BasicStroke;
 import java.awt.Canvas;
@@ -23,7 +23,6 @@ import mazegame.entities.Player;
 
 public class MazeGrapics extends Canvas {
 
-    JFrame window;
     Rectangle r;
     Graph<Point> mazeGraph;
     Point currentPoint = new Point(0, 0);
@@ -35,8 +34,7 @@ public class MazeGrapics extends Canvas {
     int nodeNum;
     int wallSpacing;         // 22 for 30
 
-    public MazeGrapics(JFrame window, Graph<Point> mazeGraph, int wallSpacing) {
-        this.window = window;
+    public MazeGrapics(Graph<Point> mazeGraph, int wallSpacing) {
         this.mazeGraph = mazeGraph;
         this.wallSpacing = wallSpacing;
         nodeNum = mazeGraph.getNumNodes();
@@ -72,7 +70,7 @@ public class MazeGrapics extends Canvas {
                                 nextPoint.getY());
 
                     try {
-                        TimeUnit.MILLISECONDS.sleep(10);
+                        ;//TimeUnit.MILLISECONDS.sleep(10);
                     } catch (Exception e) {
 
                     }

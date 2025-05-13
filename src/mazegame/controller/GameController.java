@@ -3,55 +3,44 @@
 // Date created: May 10, 2025
 // Date last updated: May 10, 2025
 
+package mazegame.controller;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-import javax.swing.text.View;
+import javax.swing.SwingUtilities;
 
 import mazegame.graphics.MazeGrapics;
 import mazegame.mazegeneration.Maze;
+import mazegame.model.Model;
+import mazegame.view.View;
 
 public class GameController {
 
     Model model;
     View view;
 
-    GameController(Model model, View view) {
+    public GameController(Model model, View view) {
         this.model = model;
         this.view = view;
     }
 
-    public void initGame() {
+    public void runGame() {
         // Game loop
+        SwingUtilities.invokeLater(() -> {view.paintMaze();});
         while (true) {
-            // SwingUtilities.invokeLater(view.update());
-            // Update model
+            SwingUtilities.invokeLater(() -> {view.update();});
+            model.update();
+            System.out.println("Test");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
         }
 
-        //Player player = new Player();
         
-        JFrame window = new JFrame();
-
-        window.setSize(700, 500);
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setVisible(true);
-        window.getContentPane().setBackground(Color.BLACK);
-        window.setExtendedState(Frame.MAXIMIZED_BOTH);
-
-        // Get window bounds
-        windowWidth = window.getBounds().getWidth();
-        windowHeight = window.getBounds().getHeight();
-
-        // Create model
-        Model model = new Model();
-        model.init(mazeSize, windowWidth, windowHeight);
-        //Maze maze = new Maze(mazeSize);
-
-        // maze.generate();
-        //maze.printGraphicsMatrix();
-
-        MazeGrapics mGraphic = new MazeGrapics(window, maze.getMazeGraph(), wallSpacing);
-        window.add(mGraphic);
     }
 
-    private
+    //private
 }

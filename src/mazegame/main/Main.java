@@ -6,6 +6,9 @@
 package mazegame.main;
 
 import mazegame.mazegeneration.Maze;
+import mazegame.model.Model;
+import mazegame.view.View;
+import mazegame.controller.GameController;
 import mazegame.graphics.MazeGrapics;
 import mazegame.entities.Player;
 import java.awt.Color;
@@ -17,7 +20,25 @@ import javax.swing.WindowConstants;
 class Main {
 
     public static void main(String args[]) {
-        int mazeSize = 100;
+        // Create view
+        View view = new View();
+
+        // Create model
+        Model model = new Model (
+            70, 
+            (int) view.getWindow().getBounds().getWidth(), 
+            (int) view.getWindow().getBounds().getHeight()
+        );
+
+        // Set model for view
+        view.setModel(model);
+
+        // Create the controller
+        GameController controller = new GameController(model, view);
+
+        controller.runGame();
+
+/*        int mazeSize = 100;
         double magnificationFactor;
         int wallSpacing;
         double mazeLength;
@@ -66,6 +87,7 @@ class Main {
 
         // Game loop
         while (window.)
+        */
     }
 /*
     private static void printMaze(int[][] maze) {
