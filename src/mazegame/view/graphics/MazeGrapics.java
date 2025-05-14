@@ -1,7 +1,7 @@
 // Class to display maze
 // Tyseer Ammar Shahriar
 // Date created: January 6, 2025
-// Date last updated: January 14, 2025
+// Date last updated: May 5, 2025
 
 package mazegame.view.graphics;
 

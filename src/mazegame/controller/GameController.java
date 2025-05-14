@@ -1,7 +1,7 @@
 // Maze Game controller class
 // Tyseer Ammar Shahriar
 // Date created: May 10, 2025
-// Date last updated: May 10, 2025
+// Date last updated: May 12, 2025
 
 package mazegame.controller;
 
@@ -24,13 +24,23 @@ public class GameController {
         this.view = view;
     }
 
+    public void initApp() {
+        Thread gameLoop = new Thread(() -> {runGame();});
+        SwingUtilities.invokeLater(() -> {
+            view.getPlayButton().addActionListener(e -> {
+                gameLoop.start();
+            });
+            view.paintStartMenu();
+        });
+    }
+
     public void runGame() {
-        // Game loop
         SwingUtilities.invokeLater(() -> {view.paintMaze();});
+        // Game loop
         while (true) {
             SwingUtilities.invokeLater(() -> {view.update();});
             model.update();
-            System.out.println("Test");
+            //System.out.println(model.getPlayMode());
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

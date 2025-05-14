@@ -10,6 +10,7 @@ public class Model {
     double mazeDisX;
     double mazeDisY;
     int mazeSize;
+    boolean playMode = false;
 
 
     public Model(int mazeSize, int windowWidth, int windowHeight) {
@@ -45,11 +46,32 @@ public class Model {
         maze.refactor((int) mazeDisX, (int) mazeDisY, (int) mazeMagnificationFactor);
     }
 
+    public void regenerateMaze(int mazeSize, int windowWidth, int windowHeight) {
+        // Generate maze
+        maze = new Maze(mazeSize);
+
+        maze.generate();
+        maze.printGraphicsMatrix();
+
+        refactor(windowWidth, windowHeight);
+
+        // Initialize entities
+        //player.setX(maze.);
+    }
+
     public Maze getMaze() {
         return maze;
     }
 
     public int getMazeWallSpacing() {
         return mazeWallSpacing;
+    }
+
+    public boolean getPlayMode() {
+        return playMode;
+    }
+
+    public void setPlayMode(boolean playMode) {
+        this.playMode = playMode;
     }
 }

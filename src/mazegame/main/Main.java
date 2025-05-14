@@ -25,7 +25,7 @@ class Main {
 
         // Create model
         Model model = new Model (
-            70, 
+            50, 
             (int) view.getWindow().getBounds().getWidth(), 
             (int) view.getWindow().getBounds().getHeight()
         );
@@ -36,7 +36,7 @@ class Main {
         // Create the controller
         GameController controller = new GameController(model, view);
 
-        controller.runGame();
+        controller.initApp();
 
 /*        int mazeSize = 100;
         double magnificationFactor;
